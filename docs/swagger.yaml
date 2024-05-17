@@ -1,0 +1,153 @@
+basePath: /
+definitions:
+  models.Planet:
+    properties:
+      diameter:
+        description: in scale km
+        type: integer
+      distance:
+        description: distance from the sun
+        type: integer
+      id:
+        type: string
+      moons:
+        type: integer
+      name:
+        type: string
+    type: object
+  models.Response:
+    properties:
+      data: {}
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@example.com
+    name: API Support
+    url: http://www.example.com/support
+  description: This is an API for managing planets in the solar system.
+  license:
+    name: MIT
+    url: http://opensource.org/licenses/MIT
+  termsOfService: http://example.com/terms/
+  title: Solar System API
+  version: "1.0"
+paths:
+  /planets:
+    get:
+      description: Get a list of all planets
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Get all planets
+      tags:
+      - planets
+    post:
+      consumes:
+      - application/json
+      description: Create a new planet with the given details
+      parameters:
+      - description: Planet details
+        in: body
+        name: planet
+        required: true
+        schema:
+          $ref: '#/definitions/models.Planet'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Create a new planet
+      tags:
+      - planets
+  /planets/{id}:
+    delete:
+      description: Delete a planet by ID
+      parameters:
+      - description: Planet ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Delete a planet
+      tags:
+      - planets
+    get:
+      description: Get details of a planet by ID
+      parameters:
+      - description: Planet ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Get a planet by ID
+      tags:
+      - planets
+    put:
+      consumes:
+      - application/json
+      description: Update the details of an existing planet by ID
+      parameters:
+      - description: Planet ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated planet details
+        in: body
+        name: planet
+        required: true
+        schema:
+          $ref: '#/definitions/models.Planet'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Update an existing planet
+      tags:
+      - planets
+swagger: "2.0"
